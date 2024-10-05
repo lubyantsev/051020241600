@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Расписание</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            margin: 0; /* Удаляем отступы */
+        }
+        .alert {
+            color: red;
+            display: none; /* Скрыть по умолчанию */
+        }
+        form {
+            margin: 20px 0; /* Добавляем отступы между формами */
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Главная страница</h1>
+
+        {% if error %}
+            <div class="alert" id="alert">{{ error }}</div>
+        {% endif %}
+
+        <h2>Создать расписание</h2>
+        <form action="{{ url_for('create_schedule') }}" method="POST">
+            <label for="new_password">Придумайте и запомните новый пароль:</label>
+            <input type="text" id="new_password" name="new_password" required>
+            <button type="submit">Создать расписание</button>
+        </form>
+
+        <h2>Открыть расписание</h2>
+        <form action="{{ url_for('view_schedule') }}" method="POST">
+            <label for="password">Введите пароль:</label>
+            <input type="text" id="password" name="password" required>
+            <button type="submit">Открыть расписание</button>
+        </form>
+    </div>
+
+    <script>
+        // Проверим, есть ли сообщение об ошибке
+        const alert = document.getElementById('alert');
+        if (alert && alert.textContent.trim() !== '') {
+            alert.style.display = 'block'; // Показать сообщение
+            setTimeout(() => {
+                alert.style.display = 'none'; // Скрыть сообщение через 3 секунды
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

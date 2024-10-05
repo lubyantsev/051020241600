@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Расписание</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1>Создать событие</h1>
+    <form method="POST">
+        <input type="text" name="when" placeholder="Когда?" required>
+        <input type="text" name="where" placeholder="Где?">
+        <input type="text" name="who" placeholder="Кто?">
+        <button type="submit">Сохранить</button>
+    </form>
+
+    <h2>События</h2>
+    <div class="buttons-container">
+        {% for button in buttons %}
+        <div class="button" style="background-color: {{ button.color }};">
+            {{ button.when }} {{ button.where }} {{ button.who }}
+            <a href="{{ url_for('edit_button', button_id=button.id) }}">Изменить</a>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if buttons %}
+    <h2>Изменить пароль этого расписания</h2>
+    <form action="/save_password/{{ schedule.id }}" method="POST">
+        <input type="text" name="password" placeholder="Пароль расписания" required>
+        <button type="submit">Сохранить новый пароль</button>
+    </form>
+    {% endif %}
+</div>
+</body>
+</html>
